@@ -27,7 +27,6 @@ class EventServiceProvider extends ServiceProvider
         ],
         Logout::class => [
             BroadcastUserLogoutNotification::class,
-
         ],
     ];
 
