@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -34,6 +35,7 @@ class UserCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
+        \Log::debug("Created {$this->user->name}");
         return new Channel('users');
     }
 }
