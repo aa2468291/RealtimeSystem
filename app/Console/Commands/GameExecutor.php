@@ -21,7 +21,7 @@ class GameExecutor extends Command
      * @var string
      */
     protected $description = 'Start executing the game';
-    private $time = 15;
+    private $time = 5;
     //預設是15秒
 
     /**
@@ -52,7 +52,7 @@ class GameExecutor extends Command
                 broadcast(new RemainingTimeChanged($this->time));
                 broadcast(new WinnerNumberGenerated(mt_rand(1,12)));
                 sleep(5); //留五秒給使用者看一下
-                $this->time = 15;
+                $this->time = 5;
             }
 
         }
