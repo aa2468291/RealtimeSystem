@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,21 +10,21 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UserUpdated implements ShouldBroadcast
+class WinnerNumberGenerated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
+    public $number;
 
 
     /**
      * Create a new event instance.
      *
-     * @param User $user
+     * @param $number
      */
-    public function __construct(User $user)
+    public function __construct($number)
     {
-        $this->user = $user;
+        $this->number = $number;
     }
 
     /**
@@ -35,7 +34,6 @@ class UserUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        \Log::debug("Updated {$this->user->name}");
-        return new Channel('users');
+        return new Channel('game');
     }
 }

@@ -21,7 +21,8 @@ class UserSessionChanged implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param $message
+     * @param $type
      */
     public function __construct($message, $type)
     {
