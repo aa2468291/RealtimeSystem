@@ -21,8 +21,8 @@
                                 <div class="row">
                                     <div class="col-12 border rounded-lg p-3">
                                         <ul id="messages" class="list-unstyled overflow-auto" style="height: 45vh">
-                                            <li>TEST1:HELLO</li>
-                                            <li>TEST2:HELLO 2</li>
+{{--                                            <li>TEST1:HELLO</li>--}}
+{{--                                            <li>TEST2:HELLO 2</li>--}}
                                         </ul>
                                     </div>
                                 </div>
@@ -58,6 +58,7 @@
 @push('scripts')
     <script>
         const usersElement = document.getElementById('users');
+        const messagesElement = document.getElementById('messages');
         Echo.join('chat')
             // here第一次連接進去 show 當前狀況而已，後面新增或者離開，則要利用joining(),leaving()
             .here((users)=>{
@@ -81,6 +82,14 @@
             .leaving((user)=>{
                 const element = document.getElementById(user.id);
                 element.parentNode.removeChild(element);
+            })
+
+            .listen('MessageSent',(e)=>{
+                let element = document.createElement('li');
+                element.innerText = e.user.name + ': ' + e.message;
+                messagesElement.appendChild(element);
+
+
             });
 
 
