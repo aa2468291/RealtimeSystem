@@ -42,8 +42,8 @@
                             <div class="col-2">
                                 <p><strong>Online Now /上線中</strong></p>
                                 <ul id="users" class="list-unstyled overflow-auto text-info" style="height: 45vh">
-                                    <li>Test1</li>
-                                    <li>Test2</li>
+{{--                                    <li>Test1</li>--}}
+{{--                                    <li>Test2</li>--}}
                                 </ul>
                             </div>
                         </div>
@@ -57,6 +57,34 @@
 
 @push('scripts')
     <script>
+        const usersElement = document.getElementById('users');
+        Echo.join('chat')
+            // here第一次連接進去 show 當前狀況而已，後面新增或者離開，則要利用joining(),leaving()
+            .here((users)=>{
+                users.forEach((user,index)=>{
+                    let element = document.createElement('li');
+                    element.setAttribute('id',user.id);
+                    element.innerText = user.name;
+                    usersElement.appendChild(element);
+                });
+            })
+
+            // 偵測後來進來的使用者
+            .joining((user)=>{
+                let element = document.createElement('li');
+                element.setAttribute('id',user.id);
+                element.innerText = user.name;
+                usersElement.appendChild(element);
+            })
+
+            //偵測離開的使用者
+            .leaving((user)=>{
+                const element = document.getElementById(user.id);
+                element.parentNode.removeChild(element);
+            })
+
+
+
 
     </script>
 @endpush
