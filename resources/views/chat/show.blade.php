@@ -81,10 +81,24 @@
             .leaving((user)=>{
                 const element = document.getElementById(user.id);
                 element.parentNode.removeChild(element);
-            })
+            });
+
+
+        const messageElement = document.getElementById('message');
+        const sendElement = document.getElementById('send');
+
+        sendElement.addEventListener('click',(e)=>{
+            e.preventDefault(); //阻止提交表單發生默認行為
+            window.axios.post('/chat/message',{
+                message: messageElement.value,
+            });
+            messageElement.value = '';
+        });
 
 
 
 
     </script>
+
+
 @endpush
