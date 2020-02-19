@@ -2,6 +2,9 @@
 
 @push('styles')
     <style type="text/css">
+        #users > li {
+            cursor: pointer;
+        }
 
     </style>
 
@@ -59,12 +62,21 @@
     <script>
         const usersElement = document.getElementById('users');
         const messagesElement = document.getElementById('messages');
+
+
+
         Echo.join('chat')
             // here第一次連接進去 show 當前狀況而已，後面新增或者離開，則要利用joining(),leaving()
             .here((users)=>{
                 users.forEach((user,index)=>{
                     let element = document.createElement('li');
                     element.setAttribute('id',user.id);
+                    // element.setAttribute('onclick',greetUser('${user.id}'));
+
+                    element.addEventListener('click', (e)=>{
+                        greetUser(user.id);
+                    });
+
                     element.innerText = user.name;
                     usersElement.appendChild(element);
                 });
@@ -74,6 +86,10 @@
             .joining((user)=>{
                 let element = document.createElement('li');
                 element.setAttribute('id',user.id);
+                // element.setAttribute('onclick',greetUser('${user.id}'));
+                element.addEventListener('click', (e)=>{
+                    greetUser(user.id);
+                });
                 element.innerText = user.name;
                 usersElement.appendChild(element);
             })
@@ -92,6 +108,10 @@
 
             });
 
+    </script>
+
+
+    <script>
 
         const messageElement = document.getElementById('message');
         const sendElement = document.getElementById('send');
@@ -104,10 +124,15 @@
             messageElement.value = '';
         });
 
-
-
-
     </script>
+
+    <script>
+        function greetUser(id) {
+            console.log('click ok');
+            window.axios.post('/chat/greet/' + id);
+        }
+    </script>
+
 
 
 @endpush
