@@ -135,4 +135,19 @@
 
 
 
+    <script>
+        Echo.private('chat.greet.{{ auth()->user()->id }}') //接受訊息的人，又是登入者才有權限
+            .listen('GreetingSent',(e)=>{
+                let element = document.createElement('li');
+                element.innerText = e.message;
+                element.classList.add('text-success');
+                messagesElement.appendChild(element);
+
+
+            })
+
+    </script>
+
+
+
 @endpush
